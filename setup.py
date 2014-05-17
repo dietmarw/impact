@@ -10,7 +10,7 @@ setup(name="impact",
       license="MIT",
       url="https://github.com/xogeny/impact",
       entry_points = {
-          'console_scripts': ['impact = bin.cli:main']
+          'console_scripts': ['impact = impactlib.cli:main']
       },
       packages=['impactlib'],
       include_package_data=True,
