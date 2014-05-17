@@ -1,5 +1,6 @@
-import argparse
+import sys
 import os
+import argparse
 
 from impactlib.refresh import refresh
 from impactlib.search import search
@@ -40,7 +41,7 @@ def call_install(args):
     install(pkgname=args.pkgname[0], verbose=args.verbose,
             dry_run=args.dry_run, target=args.target)
 
-def main(args):
+def main(args=None):
     parser_refresh = subparsers.add_parser('refresh',
                                            help="Used for private package listings")
     parser_refresh.add_argument("source_list", nargs="*")
@@ -88,4 +89,4 @@ def main(args):
     args.func(args)
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main(sys.argv))
