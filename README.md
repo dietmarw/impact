@@ -1,6 +1,6 @@
 # Impact
 
-[![Build Status](https://drone.io/github.com/xogeny/impact/status.png)](https://drone.io/github.com/xogeny/impact/latest)
+[ ![Codeship Status for dietmarw/impact](https://codeship.com/projects/8bd73600-67fa-0132-9fac-1616d65bb20b/status?branch=master)](https://codeship.com/projects/53216)
 
 *Impact* is a Modelica package manager.
 
