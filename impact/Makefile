@@ -15,6 +15,7 @@ LAST_TAG := $(shell git describe --abbrev=0 --tags)
 USER := xogeny
 EXECUTABLE := impact
 GITHUB_RELEASE = github-release
+BUILD_CMD =  go build
 
 # only include the amd64 binaries, otherwise the github release will become
 # too big
@@ -44,33 +45,33 @@ builds: $(COMPRESSED_EXECUTABLE_TARGETS)
 
 # 386
 build/darwin/386/$(EXECUTABLE):
-	GOARCH=386 GOOS=darwin go build -o "$@"
+	GOARCH=386 GOOS=darwin $(BUILD_CMD) -o "$@"
 build/freebsd/386/$(EXECUTABLE):
-	GOARCH=386 GOOS=freebsd go build -o "$@"
+	GOARCH=386 GOOS=freebsd $(BUILD_CMD) -o "$@"
 build/linux/386/$(EXECUTABLE):
-	GOARCH=386 GOOS=linux go build -o "$@"
+	GOARCH=386 GOOS=linux $(BUILD_CMD) -o "$@"
 build/netbsd/386/$(EXECUTABLE):
-	GOARCH=386 GOOS=netbsd go build -o "$@"
+	GOARCH=386 GOOS=netbsd $(BUILD_CMD) -o "$@"
 build/windows/386/$(EXECUTABLE).exe:
-	GOARCH=386 GOOS=windows go build -o "$@"
+	GOARCH=386 GOOS=windows $(BUILD_CMD) -o "$@"
 
 # amd64
 build/darwin/amd64/$(EXECUTABLE):
-	GOARCH=amd64 GOOS=darwin go build -o "$@"
+	GOARCH=amd64 GOOS=darwin $(BUILD_CMD) -o "$@"
 build/freebsd/amd64/$(EXECUTABLE):
-	GOARCH=amd64 GOOS=freebsd go build -o "$@"
+	GOARCH=amd64 GOOS=freebsd $(BUILD_CMD) -o "$@"
 build/linux/amd64/$(EXECUTABLE):
-	GOARCH=amd64 GOOS=linux go build -o "$@"
+	GOARCH=amd64 GOOS=linux $(BUILD_CMD) -o "$@"
 build/netbsd/amd64/$(EXECUTABLE):
-	GOARCH=amd64 GOOS=netbsd go build -o "$@"
+	GOARCH=amd64 GOOS=netbsd $(BUILD_CMD) -o "$@"
 build/windows/amd64/$(EXECUTABLE).exe:
-	GOARCH=amd64 GOOS=windows go build -o "$@"
+	GOARCH=amd64 GOOS=windows $(BUILD_CMD) -o "$@"
 
 # arm
 build/freebsd/arm/$(EXECUTABLE):
-	GOARCH=arm GOOS=freebsd go build -o "$@"
+	GOARCH=arm GOOS=freebsd $(BUILD_CMD) -o "$@"
 build/linux/arm/$(EXECUTABLE):
-	GOARCH=arm GOOS=linux go build -o "$@"
+	GOARCH=arm GOOS=linux $(BUILD_CMD) -o "$@"
 
 
 # compressed artifacts, makes a huge difference (Go executable is ~9MB,
@@ -94,7 +95,7 @@ dep:
 	go list -f '{{join .Deps "\n"}}' | xargs go list -e -f '{{if not .Standard}}{{.ImportPath}}{{end}}' | xargs go get -u
 
 $(EXECUTABLE): dep
-	go build -o "$@"
+	$(BUILD_CMD) -o "$@"
 
 clean:
 	rm $(EXECUTABLE) || true
@@ -102,7 +103,7 @@ clean:
 
 # Some standard commands though the original go commands are shorter :-)
 test:
-	go test
+	go test ../...
 
 install:
 	go install
